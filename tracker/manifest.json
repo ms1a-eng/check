@@ -1,0 +1,14 @@
+{
+    "manifest_version": 3,
+    "name": "Lern-Tracker",
+    "version": "1.0",
+    "permissions": ["tabs", "alarms", "storage"],
+    "host_permisions": ["https://mostafa-0332d148cf7e.herokuapp.com/*"],
+    "background":
+    {
+        "service_worker": "background.js"
+    }
+
+
+
+}
