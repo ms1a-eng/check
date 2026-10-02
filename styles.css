@@ -64,28 +64,19 @@ html, body{
     padding: 0;
 }
 
-@font-face 
-{
-    font-family: "adifont";
-    font-weight: bold;
-    src: url(schrift/adineuepro-boldweb.woff) format("woff");
-}
-
-@font-face 
-{
-    font-family: "adifont";
-    font-weight: normal;
-    src: url(schrift/adineuepro-regularweb.woff) format("woff");
-}
-
 /*              BODY SETTINGS                */
 
 body 
 {
     background-color: var(--bg-main);
     color: var(--text-color);
-    font-family: "adifont", sans-serif;
+    font-family: 'Inter', sans-serif;
     -webkit-font-smoothing: antialiased;
+}
+
+h1, h2 {
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
 }
 
 /*              NAVBAR SETTINGS               */
@@ -139,7 +130,7 @@ body
 {
     font-size: clamp(13px, 2vw, 20px);
     text-transform: uppercase;
-    letter-spacing: 0.1em; /* 0.1 * var(--text-size) */
+    letter-spacing: -0.02em;
 }
 
 .nav-center .nav-switch-toggle
@@ -352,11 +343,11 @@ body
 
 h1
 {
-    font-size: clamp(3.2rem, 12vw, 15.5rem);
+    font-size: clamp(3.2rem, 13vw, 15.5rem);
     margin: 5vh 0;
-    letter-spacing: -0.05em; /*-0.05 of the font size*/
+    letter-spacing: -0.07em; /*-0.01 of the font size*/
     text-transform: uppercase; 
-    line-height: 0.75; 
+    line-height: 0.85; 
 }
 
 h1 span
