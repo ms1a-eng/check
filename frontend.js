@@ -27,6 +27,7 @@ return answer.json(); //convert the long text/string from the server into json
 function update(){
     getMinute("cs50","cs50"); 
     getMinute("math", "math"); 
+    getMinute("java", "java"); 
     getMinute("","all"); 
 }
 function tick(){
