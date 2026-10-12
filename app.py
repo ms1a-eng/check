@@ -82,7 +82,7 @@ def get():
         #the time in row index 1
         last_time = row[1]
     else:
-        name = "IDLE"
+        name = "University"
         last_time = 0
     database.close()
 
