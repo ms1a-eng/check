@@ -1,4 +1,4 @@
-const allowedSites = ["vigilant-spoon-wvv745474x57cg95r.github.dev", "cs50", "ombplus", "ocw.mit.edu", "vorkurs.mathematik.tu-darmstadt"]; 
+const allowedSites = ["vigilant-spoon-wvv745474x57cg95r.github.dev", "cs50", "ombplus", "ocw.mit.edu", "vorkurs.mathematik.tu-darmstadt", "openlearnware", "java"]; 
 console.table(allowedSites); 
 
 //chrome filters 
