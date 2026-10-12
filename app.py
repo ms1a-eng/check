@@ -65,8 +65,10 @@ def get():
         (id SERIAL PRIMARY KEY , name TEXT, time INTEGER, created_at DOUBLE PRECISION)
         """
     )
-    if search:
-        cursor.execute("SELECT SUM(time) FROM focustable WHERE name = (%s)", (search,))  #comma to remind python thats not just a word 
+    if search == "java":
+        cursor.execute("SELECT SUM(time) FROM focustable WHERE name = 'java' OR name ILIKE '%funktionale%' OR name ILIKE '%using strings%' OR name ILIKE '%mooc%' OR name ILIKE '%fop%'")
+    elif search:
+        cursor.execute("SELECT SUM(time) FROM focustable WHERE name = (%s)", (search,))
     else: 
         cursor.execute("SELECT SUM(time) FROM focustable")
     
@@ -74,20 +76,20 @@ def get():
     result = result[0] or 0 
 
     cursor.execute(
-           "SELECT name, created_at FROM focustable ORDER BY id DESC LIMIT 1"
-        )
-    #give me the result of the execution
+        "SELECT name, created_at FROM focustable ORDER BY id DESC LIMIT 1"
+    )
     row = cursor.fetchone()
     if row: 
         name = row[0]
-        #the time in row index 1
+        if name and any(k in name.lower() for k in ["funktionale", "fop", "mooc"]):
+            name = "java"
         last_time = row[1]
     else:
-        name = "University"
+        name = "IDLE"
         last_time = 0
     database.close()
 
-    diff =  time.time() -last_time
+    diff = time.time() - last_time
     is_online = (diff < 120)
     if not is_online:
         name = "IDLE"
