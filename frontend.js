@@ -1,48 +1,64 @@
 const TOTAL_TIME = 30;
 let timeLeft = TOTAL_TIME; 
-//DRY function to not c&p. Gets two arguments, the search, and the already defined html
-function getMinute(search, html)
-{//sends a fetch, standard without any arguments a GET to the api, awaits for answer via then to translate it into a json
-fetch(`https://mostafa-0332d148cf7e.herokuapp.com/api/get?name=${search}`).then(function(answer){ 
-return answer.json(); //convert the long text/string from the server into json 
-}).then(function(data){ //as soon as data avaliable go to the html class
-    const el = document.querySelector(`.${html}`); 
-    
-    //and save its minutes (the json returned value) 
-    if (el) el.textContent = data.minutes;
 
-    //goes to active area id 
-    const elst = document.getElementById(`active-area`);
-    // and puts the name in it 
-    if(elst) {
-        elst.textContent = (!data.is_online || data.name === "INAKTIV") ? "idle" : data.name;
-    }
-    
-    const stit = document.querySelector(".status-title");
-    if (stit) stit.classList.toggle("is-live", data.is_online); 
-})
+function fetchCategory(search, targetClass) {
+    return fetch(`https://mostafa-0332d148cf7e.herokuapp.com/api/get?name=${search}`)
+        .then(function(answer) { 
+            return answer.json(); 
+        })
+        .then(function(data) {
+            if (targetClass) {
+                const el = document.querySelector(`.${targetClass}`); 
+                if (el) el.textContent = data.minutes;
+            }
+            return data;
+        })
+        .catch(function(err) {
+            console.error(`Error loading ${search}:`, err);
+            return null;
+        });
 }
 
-//for later usage to do all the following functions at once
-function update(){
-    getMinute("cs50","cs50"); 
-    getMinute("math", "math"); 
-    getMinute("java", "java"); 
-    getMinute("","all"); 
+function update() {
+    Promise.all([
+        fetchCategory("cs50", "cs50"),
+        fetchCategory("math", "math"),
+        fetchCategory("java", "java"),
+        fetchCategory("", null)
+    ]).then(function([cs50, math, java, general]) {
+        const latest = general || cs50 || math || java;
+        if (!latest) return;
+
+        const elst = document.getElementById("active-area");
+        const stit = document.querySelector(".status-title");
+
+        const isOnline = Boolean(latest.is_online);
+        if (stit) stit.classList.toggle("is-live", isOnline);
+
+        if (elst) {
+            if (!isOnline || latest.name === "INAKTIV" || latest.name === "IDLE" || latest.name === "Uni" || latest.name === "University") {
+                elst.textContent = "idle";
+            } else {
+                elst.textContent = latest.name;
+            }
+        }
+    });
 }
-function tick(){
+
+function tick() {
     timeLeft = timeLeft - 1; 
     const timerel = document.getElementById("sync-timer"); 
-    timerel.textContent= timeLeft;
+    if (timerel) timerel.textContent = timeLeft;
     const fillel = document.querySelector(".sync-fill");
-    const perecent = (timeLeft / TOTAL_TIME) * 100; 
-    fillel.style.width = perecent + "%";
-    if(timeLeft <= 0 ) {
+    if (fillel) {
+        const percent = (timeLeft / TOTAL_TIME) * 100; 
+        fillel.style.width = percent + "%";
+    }
+    if (timeLeft <= 0) {
         update();
         timeLeft = TOTAL_TIME; 
-        }
+    }
 }
-update(); 
 
-//do function update every 1sec
+update(); 
 setInterval(tick, 1000);
