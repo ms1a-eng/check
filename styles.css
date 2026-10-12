@@ -375,7 +375,7 @@ h1 span
     border-left: 1px solid var(--line);
     border-top: 1px solid var(--line);
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     grid-template-rows: auto 1fr auto;
 }
 .before-launch
@@ -459,6 +459,8 @@ section.hero:first-of-type
     color:#f4f4f4;
     list-style: none;
     min-height: 220px;
+    min-width: 0;
+    overflow: hidden;
     border-right: 1px solid var(--line); 
     border-bottom: 1px solid var(--line);
     display: grid;
@@ -470,6 +472,8 @@ section.hero:first-of-type
 {
     font-size: clamp(1.2rem, 3.3vw, 4.5rem);
     align-self: center;
+    min-width: 0;
+    max-width: 100%;
 }
 
 .progress-grid li small
@@ -500,11 +504,23 @@ section.hero:first-of-type
     display: inline-flex;
     align-items: center;
     gap: 0.3em;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+#active-area
+{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
+    max-width: 100%;
 }
 .status-title::before
 {
     content:"";
     display: inline-block; 
+    flex-shrink: 0;
     width: 0.35em;
     height: 0.35em;
     border-radius: 50%;
@@ -688,7 +704,7 @@ section.hero:first-of-type
 
 @media (max-width: 1024px) {
     .progress-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         grid-template-rows: auto;
     }
 
@@ -711,7 +727,7 @@ section.hero:first-of-type
 
 @media (max-width: 600px) {
     .progress-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
     }
 }
 

@@ -32,15 +32,17 @@ def save():
     )
 
 
-    if "ocw" in currenttab["url"] or "ombplus" in currenttab["url"] or "math" in currenttab["url"] or "vorkurs" in currenttab["url"]:  
+    url_lower = (currenttab.get("url") or "").lower()
+    title_lower = (currenttab.get("title") or "").lower()
+
+    if any(k in url_lower for k in ["ocw", "ombplus", "math", "vorkurs"]) or any(k in title_lower for k in ["math", "vorkurs", "omb+"]):  
         name = "math"
-    elif "cs50" in currenttab["url"] or "vigilant-spoon" in currenttab["url"]: 
+    elif any(k in url_lower for k in ["cs50", "vigilant-spoon"]) or "cs50" in title_lower: 
         name = "cs50"
-    elif "funktionale" in currenttab["url"] or "java" in currenttab["url"] or "mooc.fi" in currenttab["url"]: 
+    elif any(k in url_lower for k in ["funktionale", "java", "mooc.fi", "openlearnware", "fop"]) or any(k in title_lower for k in ["funktionale", "java", "mooc", "fop"]): 
         name = "java"
     else:
-        displayname = currenttab["title"]
-        name = currenttab["title"]
+        name = currenttab.get("title", "idle")
      
     cursor.execute(
         "INSERT INTO focustable (name, time, created_at) VALUES (%s, %s, %s)", (name, 1, time.time())

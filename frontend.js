@@ -36,8 +36,15 @@ function update() {
         if (stit) stit.classList.toggle("is-live", isOnline);
 
         if (elst) {
+            const rawName = (latest.name || "").toLowerCase();
             if (!isOnline || latest.name === "INAKTIV" || latest.name === "IDLE" || latest.name === "Uni" || latest.name === "University") {
                 elst.textContent = "idle";
+            } else if (rawName.includes("funktionale") || rawName.includes("java") || rawName.includes("mooc") || rawName.includes("fop")) {
+                elst.textContent = "java";
+            } else if (rawName.includes("cs50") || rawName.includes("vigilant-spoon")) {
+                elst.textContent = "cs50";
+            } else if (rawName.includes("math") || rawName.includes("omb") || rawName.includes("vorkurs") || rawName.includes("ocw")) {
+                elst.textContent = "math";
             } else {
                 elst.textContent = latest.name;
             }
