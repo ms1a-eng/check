@@ -32,11 +32,12 @@ def save():
     )
 
 
-    if "ocw" in currenttab["url"] or "ombplus" in currenttab["url"]: 
+    if "ocw" in currenttab["url"] or "ombplus" in currenttab["url"] or "math" in currenttab["url"]:  
         name = "math"
     elif "cs50" in currenttab["url"]: 
         name = "cs50"
-
+    elif "funktionale" in currenttab["url"] or "java" in currenttab: 
+        name = "java"
     elif "https://vigilant-spoon-wvv745474x57cg95r.github.dev" in currenttab["url"]:
         name = "cs50"
     else:
@@ -89,7 +90,7 @@ def get():
     diff =  time.time() -last_time
     is_online = (diff < 120)
     if not is_online:
-        name = "IDLE"
+        name = "Uni"
 
     return jsonify({"name": name ,"minutes": result, "is_online": is_online})
 
