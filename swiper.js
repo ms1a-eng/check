@@ -48,11 +48,13 @@ cards.forEach(card => {
 const toggle = document.querySelector(".nav-switch-toggle");
 const navEl = document.querySelector(".nav-menu");
 
-toggle.addEventListener("click", function()
-{
-    navEl.classList.toggle("is-open");
-    toggle.classList.toggle("is-open");
-});
+if (toggle && navEl) {
+    toggle.addEventListener("click", function()
+    {
+        navEl.classList.toggle("is-open");
+        toggle.classList.toggle("is-open");
+    });
+}
 
 const textEl = document.querySelector(".before-launch");
 const boxEl= document.querySelector(".proof-box"); 
